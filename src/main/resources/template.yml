@@ -2,7 +2,7 @@ templates:
   check:
     description: 'Проверка на запрещенные модификации'
     title: 'Вас вызвали на проверку!'
-    body: 'Выход = бан, заходите на дискорд сервер Эденор в свободный голосовой канал, или канал с именем администратора. <blue><u><hover:show_text:"Нажми чтобы открыть"><click:open_url:https://discord.com/invite/bC66Pwh>Дискорд канал'
+    body: 'Выход = бан, заходите на дискорд сервер Эденор в свободный голосовой канал, или канал с именем администратора. <blue><u><hover:show_text:"Нажми чтобы открыть"><click:open_url:https://discord.com/invite/bC66Pwh>Дискорд сервер'
     permission: 'ew.moderator'
   bad-language:
     description: 'Ненормативная лексика и оскорбления'

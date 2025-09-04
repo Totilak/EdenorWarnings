@@ -76,7 +76,7 @@ class EdenorWarningsCommand(
       }
 
       sender.sendRichMessage(
-        "<green><hover:show_text:'Нажми, чтобы использовать'><click:suggest_command:/ew send $name>$name</click></hover></green><yellow> - $description</yellow>"
+        "<green><hover:show_text:'Нажми, чтобы использовать'><click:suggest_command:/ew send $name >$name</click></hover></green><yellow> - $description</yellow>"
       )
     }
   }

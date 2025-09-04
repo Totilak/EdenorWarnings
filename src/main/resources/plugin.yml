@@ -1,0 +1,14 @@
+name: EdenorWarnings
+version: '1.0.0'
+author: Totilak
+contributors: [WesOrangePower]
+main: ru.edenor.edenorWarnings.EdenorWarnings
+api-version: '1.21.8'
+folia-supported: true
+permissions:
+  ew.helper:
+    description: Базовый набор оповещаний для хелпера
+  ew.moderator:
+    description: Набор оповещаний для модераторов
+  ew.administrator:
+    description: Набор оповещаний для администраторов

@@ -12,3 +12,5 @@ permissions:
     description: Набор оповещаний для модераторов
   ew.administrator:
     description: Набор оповещаний для администраторов
+  ew.notify:
+    description: Оповещение администратора о нарушении в чате.

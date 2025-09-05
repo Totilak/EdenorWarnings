@@ -11,6 +11,9 @@ class EdenorWarnings : JavaPlugin() {
 
   override fun onEnable() {
     // Plugin startup logic
+    instance = this
+    EdenorWarnings.instance.slF4JLogger.info("EdenorWarnings is active!")
+
     warningRegistry = ConfigurationWarningRegistry(this)
 
     lifecycleManager.registerEventHandler(LifecycleEvents.COMMANDS) { commands
@@ -25,15 +28,19 @@ class EdenorWarnings : JavaPlugin() {
     // Plugin shutdown logic
   }
 
-  fun reload(){
+  fun reload() {
     warningRegistry.reload()
   }
 
-  companion object{
+  companion object {
     const val HELPER_PERMISSION = "ew.helper"
     const val MODERATOR_PERMISSION = "ew.moderator"
     const val ADMINISTRATOR_PERMISSION = "ew.administrator"
+    const val NOTIFY_PERMISSION = "ew.notify"
     const val TEMPLATES_FILENAME = "temlates.yml"
     const val TEMPLATES_SECTION = "templates"
+
+    lateinit var instance: EdenorWarnings
+      private set
   }
 }

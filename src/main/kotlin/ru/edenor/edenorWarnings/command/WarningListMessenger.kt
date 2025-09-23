@@ -22,6 +22,6 @@ object WarningListMessenger {
 
   private fun clickableTemplate(name: String, description: String?): String =
     "<green><hover:show_text:'Нажми, чтобы использовать'>" +
-        "<click:suggest_command:/ew send $name>$name</click></hover></green>" +
+        "<click:suggest_command:/ew send $name >$name</click></hover></green>" +
         "<yellow> - ${description ?: "none"}</yellow>"
 }

@@ -7,19 +7,3 @@ data class Warning(
   val body: String,
   val permission: String?
 )
-
-
-/*
-*
-* /command Totilak kissa
-* Привет кисса, тебя беспокоит ${sender}!
-* Templates:
-*   Kissa:
-*     title:
-*     sub-tittle:
-*     body:
-*     permission:
-*
-*
-*
-* */

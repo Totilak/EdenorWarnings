@@ -13,15 +13,21 @@ import ru.edenor.edenorWarnings.data.Warning
 object Message {
   private val mm = MiniMessage.miniMessage()
 
-  fun sendWarning(warning: Warning, sender: CommandSender, profile: PlayerProfile, plugin: EdenorWarnings) {
-    val player = plugin.server.getPlayer(profile.id ?: return profile.noUuid(sender)) ?: return profile.offline(sender)
+  fun sendWarning(
+    warning: Warning,
+    sender: CommandSender,
+    profile: PlayerProfile,
+    plugin: EdenorWarnings
+  ) {
+    val uuid = profile.id ?: profile.noUuid(sender)
+    val player = plugin.server.getPlayer(uuid) ?: profile.offline(sender)
 
     warning.sendTo(player, sender)
-    player.playSound(player, Sound.BLOCK_END_PORTAL_FRAME_FILL, SoundCategory.UI, 1f, 0.4f)
-
+    player.playSound(player.location, Sound.BLOCK_END_PORTAL_FRAME_FILL, SoundCategory.MASTER, 1f, 0.4f)
     sender.sendRichMessage("<green>Сообщение успешно отправлено!")
     plugin.slF4JLogger.info("{} sent a warning '{}' to {}", sender.name, warning.name, player.name)
   }
+
 
   private fun PlayerProfile.noUuid(sender: CommandSender): Nothing {
     sender.sendRichMessage("<red>У профиля $name нет UUID!</red>")

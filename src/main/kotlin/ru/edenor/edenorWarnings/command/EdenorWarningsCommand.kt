@@ -55,7 +55,6 @@ class EdenorWarningsCommand(
     WarningListMessenger.sendList(sender, warningRegistry)
   }
 
-
   private fun sendWarning(context: CommandContext<CommandSourceStack>) {
     val profiles = context
       .getArgument("name", PlayerProfileListResolver::class.java)

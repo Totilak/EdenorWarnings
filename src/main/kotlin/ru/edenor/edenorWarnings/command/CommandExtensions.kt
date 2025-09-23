@@ -20,12 +20,12 @@ object CommandExtensions {
     vararg permissions: String
   ) = this.requires { ctx -> permissions.any { ctx.sender.hasPermission(it) } }
 
-  internal fun LiteralArgumentBuilder<CommandSourceStack>
-      .requiresAnyPermission() =
+  internal fun LiteralArgumentBuilder<CommandSourceStack>.requiresAnyPermission() =
     this.requiresAnyPermissionOf(
       HELPER_PERMISSION,
       MODERATOR_PERMISSION,
-      ADMINISTRATOR_PERMISSION)
+      ADMINISTRATOR_PERMISSION
+    )
 
 
   internal fun LiteralArgumentBuilder<CommandSourceStack>.simplyRun(

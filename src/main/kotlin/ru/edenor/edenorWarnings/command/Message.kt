@@ -13,8 +13,6 @@ import ru.edenor.edenorWarnings.data.Warning
 
 object Message {
 
-  private val mm = MiniMessage.miniMessage()
-
   fun sendWarning(
     warning: Warning,
     sender: CommandSender,

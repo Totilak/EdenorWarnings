@@ -1,5 +1,6 @@
 package ru.edenor.edenorWarnings.command
 
+import com.mojang.brigadier.Command
 import com.mojang.brigadier.context.CommandContext
 import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.command.brigadier.Commands.argument
@@ -7,6 +8,7 @@ import io.papermc.paper.command.brigadier.Commands.literal
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes
 import io.papermc.paper.command.brigadier.argument.resolvers.PlayerProfileListResolver
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 import ru.edenor.edenorWarnings.EdenorWarnings
 import ru.edenor.edenorWarnings.EdenorWarnings.Companion.ADMINISTRATOR_PERMISSION
 import ru.edenor.edenorWarnings.EdenorWarnings.Companion.HELPER_PERMISSION
@@ -19,6 +21,7 @@ class EdenorWarningsCommand(
   private val plugin: EdenorWarnings,
   private val warningRegistry: WarningRegistry
 ) {
+
   fun commands() = arrayOf(ew)
 
   private val listSection =
@@ -26,6 +29,10 @@ class EdenorWarningsCommand(
 
   private val useSection =
     literal("send").requiresAnyPermission()
+      .executes {
+        it.source.sender.sendRichMessage("<red>Использование: /ew send <template> <player></red>")
+        Command.SINGLE_SUCCESS
+      }
       .then(
         argument("template", WarningNotificationsArgumentType(warningRegistry))
           .then(
@@ -48,7 +55,7 @@ class EdenorWarningsCommand(
 
   private fun reload(sender: CommandSender) {
     plugin.reload()
-    sender.sendRichMessage("<green>Настройки успешно перезагружены")
+    sender.sendRichMessage("<green>Настройки успешно перезагружены</green>")
   }
 
   private fun sendList(sender: CommandSender) {
@@ -68,7 +75,19 @@ class EdenorWarningsCommand(
     }
 
     profiles.forEach { profile ->
-      Message.sendWarning(warning, sender, profile, plugin)
+      val uuid = profile.id
+      if (uuid == null) {
+        sender.sendRichMessage("<red>Профиль ${profile.name} не имеет UUID!</red>")
+        return@forEach
+      }
+
+      val player: Player? = plugin.server.getPlayer(uuid)
+      if (player == null) {
+        sender.sendRichMessage("<red>Игрок ${profile.name} не в сети!</red>")
+        return@forEach
+      }
+
+      Message.sendWarning(warning, sender, player, plugin)
     }
   }
 
@@ -83,20 +102,14 @@ class EdenorWarningsCommand(
         "<green><hover:show_text:'Нажми, чтобы использовать'><click:suggest_command:/ew list>/ew list</click></hover> <yellow>- Вывести список сообщений"
       )
       sender.sendRichMessage(
-        "<green><hover:show_text:'Нажми, чтобы использовать'><click:suggest_command:/ew send>/ew send</click></hover> <warning> <username> <yellow>- Отправить сообщение игроку"
+        "<green><hover:show_text:'Нажми, чтобы использовать'><click:suggest_command:/ew send>/ew send</click></hover> <yellow>- Отправить сообщение игроку"
       )
     }
-    /*    if (sender.hasPermission(MODERATOR_PERMISSION)) {
-          sender.sendRichMessage(
-            "Хелп + модер команды"
-          )
-        }*/
+
     if (sender.hasPermission(ADMINISTRATOR_PERMISSION)) {
       sender.sendRichMessage(
         "<green><hover:show_text:'Нажми, чтобы использовать'><click:suggest_command:/ew reload>/ew reload</click></hover> <yellow>- Перезагрузить настройки"
       )
     }
   }
-
-
 }
